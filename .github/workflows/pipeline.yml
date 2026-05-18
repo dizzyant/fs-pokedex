@@ -13,7 +13,7 @@ jobs:
           node-version: "24"
       - uses: superfly/flyctl-actions/setup-flyctl@master
         with:
-          version: 0.0.462
+          version: 0.4.52
       - name: Install dependencies
         run: npm install
       - name: Check style
