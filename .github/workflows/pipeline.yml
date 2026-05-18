@@ -1,10 +1,8 @@
 name: Deployment pipeline
-
 on:
   push:
     branches:
       - main
-
 jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-latest
@@ -13,6 +11,9 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: 0.0.462
       - name: Install dependencies
         run: npm install
       - name: Check style
@@ -25,4 +26,9 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run Playwright tests
         run: npm run test:e2e
+      - name: Run flyctl deploy --remote-only
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
 
