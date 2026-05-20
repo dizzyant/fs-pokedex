@@ -14,9 +14,6 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-        with:
-          version: 0.4.52
       - name: Install dependencies
         run: npm install
       - name: Check style
@@ -34,6 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: 0.4.52
       - name: Run flyctl deploy --remote-only
         if: ${{ github.event_name == 'push' && !contains(join(toJson(github.event.commits.*.message)),'#skip') && success()}} 
         run: flyctl deploy --remote-only
